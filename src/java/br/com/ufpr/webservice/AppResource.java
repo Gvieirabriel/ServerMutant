@@ -40,7 +40,6 @@ public class AppResource {
     /**
      * Creates a new instance of AppResource
      */
-    @Inject 
     public AppResource() {
     }
 
