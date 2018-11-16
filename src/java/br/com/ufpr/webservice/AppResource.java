@@ -74,9 +74,11 @@ public class AppResource {
     @POST
     @Path("/deleteMutant/{mutant}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteMutant(@PathParam("mutant") Mutant mutant) throws SQLException, ClassNotFoundException {
+    public void deleteMutant(@PathParam("mutant") String mutant) throws SQLException, ClassNotFoundException {
+        Mutant m = new Mutant();
+        m.setName(mutant);
         MutantDao dao = new MutantDao();
-        dao.deleteMutant(mutant);
+        dao.deleteMutant(m);
     }
     
     @GET
@@ -112,33 +114,41 @@ public class AppResource {
     @POST
     @Path("/updateMutant/{mutant}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Long updateMutant(@PathParam("mutant") Mutant mutant) throws SQLException, ClassNotFoundException {
+    public String updateMutant(@PathParam("mutant") String mutant) throws SQLException, ClassNotFoundException {
+        Mutant m = new Mutant();
+        m.setName(mutant);
         MutantDao dao = new MutantDao();
-        return dao.updateMutant(mutant);
+        return Long.toString(dao.updateMutant(m));
     }
     
     @POST
     @Path("/addAbility/{ability}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void addAbility(@PathParam("ability") Ability ability) throws SQLException, ClassNotFoundException {
+    public void addAbility(@PathParam("ability") String ability) throws SQLException, ClassNotFoundException {
+        Ability a = new Ability();
+        a.setName(ability);
         AbilityDao dao = new AbilityDao();
-        dao.addAbility(ability);
+        dao.addAbility(a);
     }
     
     @POST
     @Path("/deleteAbility/{ability}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteAbility(@PathParam("ability") Ability ability) throws SQLException, ClassNotFoundException {
+    public void deleteAbility(@PathParam("ability") String ability) throws SQLException, ClassNotFoundException {
         AbilityDao dao = new AbilityDao();
-        dao.deleteAbility(ability);
+        Ability a = new Ability();
+        a.setName(ability);
+        dao.deleteAbility(a);
     }
     
     @GET
     @Path("/getAllAbilities/{mutant}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllAbilitiesByMutant(@PathParam("mutant") Mutant mutant) throws SQLException, ClassNotFoundException {
+    public Response getAllAbilitiesByMutant(@PathParam("mutant") String mutant) throws SQLException, ClassNotFoundException {
+        Mutant m = new Mutant();
+        m.setName(mutant);
         AbilityDao dao = new AbilityDao();
-        List<Ability> abilities = dao.getAllAbilityOfMutant(mutant);
+        List<Ability> abilities = dao.getAllAbilityOfMutant(m);
         GenericEntity<List<Ability>> lista = new GenericEntity<List<Ability>>(abilities) {};
         return Response.status(Response.Status.OK).entity(lista).build();
     }
