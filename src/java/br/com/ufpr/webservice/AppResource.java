@@ -45,12 +45,14 @@ public class AppResource {
 
     @GET
     @Path("/login/{email}/{senha}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User buscaLogin(@PathParam("email") String email, @PathParam("senha") String senha) throws SQLException, ClassNotFoundException {
+    @Produces(MediaType.TEXT_PLAIN)
+    public String buscaLogin(@PathParam("email") String email, @PathParam("senha") String senha) throws SQLException, ClassNotFoundException {
         UserDao dao = new UserDao();
         User user = new User();
         user = dao.getAuthenticateString(email, senha);
-        return user;
+        if(user != null)
+            return "true";
+        return "false";
     }
     
     @POST
@@ -112,32 +114,35 @@ public class AppResource {
     }
     
     @POST
-    @Path("/updateMutant/{mutant}")
+    @Path("/updateMutant/{mutant}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateMutant(@PathParam("mutant") String mutant) throws SQLException, ClassNotFoundException {
+    public String updateMutant(@PathParam("mutant") String mutant, @PathParam("id") String id) throws SQLException, ClassNotFoundException {
         Mutant m = new Mutant();
         m.setName(mutant);
+        m.setId(Integer.parseInt(mutant));
         MutantDao dao = new MutantDao();
         return Long.toString(dao.updateMutant(m));
     }
     
     @POST
-    @Path("/addAbility/{ability}")
+    @Path("/addAbility/{ability}/{mutant}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void addAbility(@PathParam("ability") String ability) throws SQLException, ClassNotFoundException {
+    public void addAbility(@PathParam("ability") String ability, @PathParam("mutant") String mutant) throws SQLException, ClassNotFoundException {
         Ability a = new Ability();
         a.setName(ability);
+        a.setIdMutant(Integer.parseInt(mutant));
         AbilityDao dao = new AbilityDao();
         dao.addAbility(a);
     }
     
     @POST
-    @Path("/deleteAbility/{ability}")
+    @Path("/deleteAbility/{ability}/{m}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteAbility(@PathParam("ability") String ability) throws SQLException, ClassNotFoundException {
+    public void deleteAbility(@PathParam("ability") String ability, @PathParam("m") String m) throws SQLException, ClassNotFoundException {
         AbilityDao dao = new AbilityDao();
         Ability a = new Ability();
         a.setName(ability);
+        a.setIdMutant(Integer.parseInt(m));
         dao.deleteAbility(a);
     }
     

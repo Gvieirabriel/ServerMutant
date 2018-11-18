@@ -21,18 +21,18 @@ public class UserDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT _id, _login FROM Usuario WHERE _login = ? AND _password = ? ");
+            ps = con.prepareStatement("SELECT _login FROM Usuario WHERE _login = ? AND _password = ? ");
             ps.setString(1, name);
-            ps.setString(1, password);
+            ps.setString(2, password);
             rs = ps.executeQuery();
             List<User> list = new ArrayList<User>();
             while (rs.next()) {
                 User u = new User();
-                u.setId(0);
-                u.setName(rs.getString("_name"));
+                u.setName(rs.getString("_login"));
                 list.add(u);
             }
-            return list.get(0);
+            if(list != null)
+                return list.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
