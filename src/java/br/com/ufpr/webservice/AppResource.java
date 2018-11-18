@@ -66,6 +66,14 @@ public class AppResource {
     }
     
     @GET
+    @Path("/getLastMutant")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getMutant() throws SQLException, ClassNotFoundException {
+        MutantDao dao = new MutantDao();
+        return Integer.toString(dao.getlastMutant());
+    }
+    
+    @GET
     @Path("/getMutant/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Mutant getMutant(@PathParam("name") String name) throws SQLException, ClassNotFoundException {
@@ -99,8 +107,12 @@ public class AppResource {
     public Response getMutantsByName(@PathParam("name") String name) throws SQLException, ClassNotFoundException {
         MutantDao dao = new MutantDao();
         List<Mutant> mutants =  dao.searchMutantName(name);
-        GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
-        return Response.status(Response.Status.OK).entity(lista).build(); 
+        if(!mutants.isEmpty())
+        {
+            GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
+            return Response.status(Response.Status.OK).entity(lista).build(); 
+        }
+        return null;
     }
     
     @GET
@@ -109,8 +121,12 @@ public class AppResource {
     public Response getMutantsByAbility(@PathParam("ability") String ability) throws SQLException, ClassNotFoundException {
         MutantDao dao = new MutantDao();
         List<Mutant> mutants =  dao.searchMutantAbility(ability);
-        GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
-        return Response.status(Response.Status.OK).entity(lista).build();
+        if(!mutants.isEmpty())
+        {
+            GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
+            return Response.status(Response.Status.OK).entity(lista).build(); 
+        }
+        return null;
     }
     
     @POST
