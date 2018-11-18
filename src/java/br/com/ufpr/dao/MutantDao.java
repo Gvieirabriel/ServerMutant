@@ -108,6 +108,27 @@ public class MutantDao {
         return null;
     }
 
+    public List searchMutantAb(String name) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement("SELECT m._id, m._name  FROM Mutants AS m JOIN Ability AS a ON a._ability_id = m._id  WHERE a._name LIKE ?");
+            ps.setString(1,"%"+name+"%");
+            rs = ps.executeQuery();
+            List<Mutant> list = new ArrayList<Mutant>();
+            while (rs.next()) {
+                Mutant a = new Mutant();
+                a.setId(rs.getInt("_id"));
+                a.setName(rs.getString("_name"));
+                list.add(a);
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public long updateMutant(Mutant mutant) {
         PreparedStatement st = null;
         ResultSet rs = null;

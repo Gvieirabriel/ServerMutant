@@ -97,7 +97,7 @@ public class AppResource {
     public Response getAllMutants() throws SQLException, ClassNotFoundException {
         MutantDao dao = new MutantDao();
         List<Mutant> mutants = dao.getAllMutants();
-        GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
+            GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
         return Response.status(Response.Status.OK).entity(lista).build(); 
     }
     
@@ -120,7 +120,7 @@ public class AppResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMutantsByAbility(@PathParam("ability") String ability) throws SQLException, ClassNotFoundException {
         MutantDao dao = new MutantDao();
-        List<Mutant> mutants =  dao.searchMutantAbility(ability);
+        List<Mutant> mutants =  dao.searchMutantAb(ability);
         if(!mutants.isEmpty())
         {
             GenericEntity<List<Mutant>> lista = new GenericEntity<List<Mutant>>(mutants) {};
