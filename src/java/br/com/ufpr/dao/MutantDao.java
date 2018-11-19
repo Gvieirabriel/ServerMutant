@@ -144,6 +144,7 @@ public class MutantDao {
             st.setString(1, name);
             st.setString(2, lastName);
             st.executeUpdate();
+            return 1;
         } catch (SQLException ex) {
             Logger.getLogger(MutantDao.class.getName()).log(Level.SEVERE, null, ex);
         }

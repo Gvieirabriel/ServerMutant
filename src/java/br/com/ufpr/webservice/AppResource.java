@@ -131,10 +131,11 @@ public class AppResource {
     
     @GET
     @Path("/updateMutant/{lastName}/{name}")
-    public String updateMutant(@PathParam("lastName") String lastName, @PathParam("name") String name) throws SQLException, ClassNotFoundException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateMutant(@PathParam("lastName") String lastName, @PathParam("name") String name) throws SQLException, ClassNotFoundException {
         MutantDao dao = new MutantDao();
-        dao.updateMutant(lastName,name);
-        return "true";
+        dao.updateMutant(lastName, name);
+        return Response.status(Response.Status.OK).header("content-type", "text/plain; charset=utf-8").build();
     }
     
     @POST
