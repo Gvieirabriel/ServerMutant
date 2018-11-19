@@ -158,7 +158,7 @@ public class AppResource {
         AbilityDao dao = new AbilityDao();
         Ability a = new Ability();
         a.setName(ability);
-        a.setIdMutant(Integer.parseInt(m));
+        a.setId(Integer.parseInt(m));
         dao.deleteAbility(a);
     }
     

@@ -5,6 +5,7 @@
  */
 package br.com.ufpr.dao;
 
+import br.com.ufpr.bean.Ability;
 import br.com.ufpr.bean.Mutant;
 import br.com.ufpr.bean.User;
 import java.sql.Connection;
@@ -56,6 +57,12 @@ public class MutantDao {
     }
     
     public void deleteMutant(Mutant mutant) {
+        AbilityDao dao = new AbilityDao();
+        List<Ability> list = dao.getAllAbilityOfMutant(mutant);
+        
+        for(Ability a : list)
+            dao.deleteAbility(a);
+        
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
