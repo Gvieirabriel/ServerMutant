@@ -51,8 +51,8 @@ public class AbilityDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT _id, _name  FROM Ability WHERE _ability_id = ?");
-            ps.setInt(1, mutant.getId());
+            ps = con.prepareStatement("SELECT a._id, a._name  FROM Ability AS a JOIN Mutants AS m ON a._ability_id = m._id WHERE m._name = ?");
+            ps.setString(1, mutant.getName());
             rs = ps.executeQuery();
             List<Ability> list = new ArrayList<Ability>();
             while (rs.next()) {

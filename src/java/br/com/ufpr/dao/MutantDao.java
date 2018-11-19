@@ -59,7 +59,7 @@ public class MutantDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("DELETE FROM Mutants SET WHERE _name = ?");
+            ps = con.prepareStatement("DELETE FROM Mutants WHERE _name = ?");
             ps.setString(1, mutant.getName());
             ps.executeUpdate();
         } catch (SQLException e) {
