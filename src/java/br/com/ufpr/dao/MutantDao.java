@@ -136,20 +136,14 @@ public class MutantDao {
         return null;
     }
     
-    public long updateMutant(Mutant mutant) {
+    public long updateMutant(String lastName, String name) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = con.prepareStatement("UPDATE Mutants SET _name = ? WHERE _id = ?");
-            st.setString(1, "%"+mutant.getName()+"%");
-            st.setInt(2, mutant.getId());
+            st = con.prepareStatement("UPDATE Mutants SET _name = ? WHERE _name = ?");
+            st.setString(1, name);
+            st.setString(2, lastName);
             st.executeUpdate();
-            
-            ResultSet rsID = st.getGeneratedKeys();
-            if (rsID.next()) {
-                mutant.setId(rsID.getInt("_id")); 
-            }
-            return mutant.getId();
         } catch (SQLException ex) {
             Logger.getLogger(MutantDao.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -161,7 +155,7 @@ public class MutantDao {
         ResultSet rs = null;
         try {
             ps = con.prepareStatement("SELECT a._name FROM Mutants AS m JOIN Ability AS a ON a._ability_id = m._id WHERE a._name = ? ");
-            ps.setString(1, ability);
+            ps.setString(1, "%"+ability+"%");
             rs = ps.executeQuery();
             List<Mutant> list = new ArrayList<Mutant>();
             while (rs.next()) {

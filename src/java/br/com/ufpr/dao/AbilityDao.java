@@ -39,7 +39,7 @@ public class AbilityDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("DELETE FROM Ability SET WHERE _id = ?");
+            ps = con.prepareStatement("DELETE FROM Ability WHERE _id = ?");
             ps.setInt(1, ability.getId());
             ps.executeUpdate();
         } catch (SQLException e) {

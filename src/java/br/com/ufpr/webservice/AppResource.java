@@ -129,15 +129,12 @@ public class AppResource {
         return null;
     }
     
-    @POST
-    @Path("/updateMutant/{mutant}/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String updateMutant(@PathParam("mutant") String mutant, @PathParam("id") String id) throws SQLException, ClassNotFoundException {
-        Mutant m = new Mutant();
-        m.setName(mutant);
-        m.setId(Integer.parseInt(mutant));
+    @GET
+    @Path("/updateMutant/{lastName}/{name}")
+    public String updateMutant(@PathParam("lastName") String lastName, @PathParam("name") String name) throws SQLException, ClassNotFoundException {
         MutantDao dao = new MutantDao();
-        return Long.toString(dao.updateMutant(m));
+        dao.updateMutant(lastName,name);
+        return "true";
     }
     
     @POST
