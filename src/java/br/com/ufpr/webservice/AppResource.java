@@ -150,6 +150,23 @@ public class AppResource {
     }
     
     @POST
+    @Path("/addAbilityByName/{ability}/{mutant}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void addAbilityByName(@PathParam("ability") String ability, @PathParam("mutant") String mutant) throws SQLException, ClassNotFoundException {
+        Ability a = new Ability();
+        a.setName(ability);
+        MutantDao m = new MutantDao();
+        Mutant mu = m.getMutant(mutant);
+        a.setIdMutant(mu.getId());
+        AbilityDao dao = new AbilityDao();
+        List<Ability> list = dao.getAllAbilityOfMutant(mu);
+        for(Ability ab : list)
+            if(ab.getName().equals(a.getName()))
+                return;
+        dao.addAbility(a);
+    }
+    
+    @POST
     @Path("/deleteAbility/{ability}/{m}")
     @Produces(MediaType.APPLICATION_JSON)
     public void deleteAbility(@PathParam("ability") String ability, @PathParam("m") String m) throws SQLException, ClassNotFoundException {

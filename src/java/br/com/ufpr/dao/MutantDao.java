@@ -38,13 +38,13 @@ public class MutantDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = con.prepareStatement("SELECT _name, _image FROM Mutants WHERE _name = ? ");
+            ps = con.prepareStatement("SELECT _id, _name, _image FROM Mutants WHERE _name = ? ");
             ps.setString(1, name);
             rs = ps.executeQuery();
             List<Mutant> list = new ArrayList<Mutant>();
             while (rs.next()) {
                 Mutant m = new Mutant();
-                m.setId(0);
+                m.setId(rs.getInt("_id"));
                 m.setName(rs.getString("_name"));
                 list.add(m);
             }
